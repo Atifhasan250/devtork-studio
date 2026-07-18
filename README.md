@@ -75,12 +75,16 @@ Replace concept-project wording where needed, verify all business claims, add fi
 - Updated the positioning line to “Global digital studio · Bangladesh”.
 - Fixed mobile service arrows and reduced the desktop content width for cleaner margins.
 
-
 ## V4 refinements
 
-- Minimum-duration, resource-aware branded loader
-- Refined logo/orbit loader motion and reveal
-- Restored circular ring-and-dot cursor
-- Reduced desktop navbar height
-- Directional left-to-right / right-to-left desktop nav hover
-- Mobile menu preserved without visual changes
+- Added the timed brand loader with staged progress and a minimum visible duration.
+- Restored the restrained circular cursor.
+- Reduced desktop navigation height and added the bidirectional text-sweep hover treatment.
+
+## V5 refinements
+
+- Completed loader and route-transition overlays are now unmounted instead of remaining as hidden fixed layers.
+- Active overlays use dynamic mobile viewport units (`dvh`, `svh`, and `lvh`) to prevent a purple strip from appearing when a mobile browser toolbar expands or collapses.
+- Added the official 1200×630 social link preview at `public/og/devtork-link-preview.jpg`.
+- Added complete Open Graph and large-image Twitter metadata. Facebook, WhatsApp, Telegram, LinkedIn, X, Discord, and other compatible link unfurlers can read the same server-rendered preview metadata.
+- Set `NEXT_PUBLIC_SITE_URL` to the final public HTTPS domain before deployment so preview image URLs are absolute and accessible to social crawlers.

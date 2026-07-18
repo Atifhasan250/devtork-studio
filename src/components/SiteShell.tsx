@@ -58,6 +58,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loaderMounted, setLoaderMounted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [transitionPhase, setTransitionPhase] = useState<TransitionPhase>("idle");
   const [darkFirstSection, setDarkFirstSection] = useState(pathname === "/studio");
@@ -127,6 +128,12 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       if (exitTimer) window.clearTimeout(exitTimer);
     };
   }, []);
+
+  useEffect(() => {
+    if (loading) return;
+    const unmountTimer = window.setTimeout(() => setLoaderMounted(false), 920);
+    return () => window.clearTimeout(unmountTimer);
+  }, [loading]);
 
   useEffect(() => {
     let lenis: import("lenis").default | undefined;
@@ -338,22 +345,26 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     <div onClickCapture={navigate}>
       <a className="skip-link" href="#main">Skip to content</a>
       <div className="scroll-progress" aria-hidden="true"><span className="scroll-progress-bar" /></div>
-      <div className={`site-loader ${loading ? "" : "is-done"}`} aria-hidden="true">
-        <div className="loader-grid" />
-        <div className="loader-inner">
-          <div className="loader-top">
-            <span>DevTork® / Digital Studio</span>
-            <span className="loader-stage">{progress < 31 ? "Strategy" : progress < 68 ? "Design" : progress < 94 ? "Build" : "Ready"}</span>
+      {loaderMounted && (
+        <div className={`site-loader ${loading ? "" : "is-done"}`} aria-hidden="true">
+          <div className="loader-grid" />
+          <div className="loader-inner">
+            <div className="loader-top">
+              <span>DevTork® / Digital Studio</span>
+              <span className="loader-stage">{progress < 31 ? "Strategy" : progress < 68 ? "Design" : progress < 94 ? "Build" : "Ready"}</span>
+            </div>
+            <div className="loader-core">
+              <div className="loader-orbit"><span className="loader-mark" /></div>
+              <div className="loader-count"><span className="loader-number">{String(progress).padStart(2, "0")}</span><small>%</small></div>
+            </div>
+            <div className="loader-line"><span className="loader-progress" style={{ width: `${progress}%` }} /></div>
+            <div className="loader-copy"><span>Shaping a clear first impression</span><span>Loading the experience</span></div>
           </div>
-          <div className="loader-core">
-            <div className="loader-orbit"><span className="loader-mark" /></div>
-            <div className="loader-count"><span className="loader-number">{String(progress).padStart(2, "0")}</span><small>%</small></div>
-          </div>
-          <div className="loader-line"><span className="loader-progress" style={{ width: `${progress}%` }} /></div>
-          <div className="loader-copy"><span>Shaping a clear first impression</span><span>Loading the experience</span></div>
         </div>
-      </div>
-      <div className={`page-wipe is-${transitionPhase}`} aria-hidden="true"><span className="page-wipe-mark" /></div>
+      )}
+      {transitionPhase !== "idle" && (
+        <div className={`page-wipe is-${transitionPhase}`} aria-hidden="true"><span className="page-wipe-mark" /></div>
+      )}
       <div className="cursor" aria-hidden="true" /><div className="cursor-dot" aria-hidden="true" />
 
       <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${headerOnDark ? "on-dark" : ""}`}>

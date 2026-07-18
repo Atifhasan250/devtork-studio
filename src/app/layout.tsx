@@ -4,26 +4,59 @@ import "./globals.css";
 import SiteShell from "@/components/SiteShell";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devtork.studio";
+const previewImage = "/og/devtork-link-preview.jpg";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "DevTork Studio — Design, Development & Digital Growth", template: "%s — DevTork Studio" },
+  applicationName: "DevTork Studio",
+  title: {
+    default: "DevTork Studio — Design, Development & Digital Growth",
+    template: "%s — DevTork Studio"
+  },
   description: "DevTork Studio designs and builds clear websites, apps, brands, and digital growth systems.",
   keywords: ["digital agency", "web design", "web development", "mobile apps", "branding", "SEO", "Bangladesh"],
   authors: [{ name: "DevTork Studio" }],
   creator: "DevTork Studio",
+  publisher: "DevTork Studio",
+  category: "Digital Agency",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
+  },
   openGraph: {
     type: "website",
+    locale: "en_US",
+    url: "/",
     siteName: "DevTork Studio",
     title: "DevTork Studio — Clear digital experiences",
     description: "Websites, apps, brands, and growth systems—designed clearly and built carefully.",
-    images: [{ url: "/brand/logo-horizontal.jpg", width: 1536, height: 804, alt: "DevTork Studio brand logo" }]
+    images: [
+      {
+        url: previewImage,
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
+        alt: "DevTork Studio — Global Digital Studio"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevTork Studio",
-    description: "Clear digital experiences for ambitious businesses.",
-    images: ["/brand/logo-horizontal.jpg"]
+    title: "DevTork Studio — Clear digital experiences",
+    description: "Websites, apps, brands, and growth systems—designed clearly and built carefully.",
+    images: [previewImage]
   },
   icons: {
     icon: [{ url: "/brand/app-icon-light.png", type: "image/png", sizes: "512x512" }],

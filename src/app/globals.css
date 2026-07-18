@@ -1646,3 +1646,47 @@ body.cursor-ready .cursor-dot { opacity: 1; }
   .loader-mark,
   .loader-stage::before { animation: none!important; }
 }
+
+/* ========================================================================== 
+   DevTork Studio v5 — mobile overlay cleanup and dynamic viewport hardening
+   ========================================================================== */
+
+/* Mobile browsers resize the visual viewport when their address bar changes.
+   Fully remove completed overlays from the DOM (handled in SiteShell) and make
+   their active state follow the dynamic viewport so no gradient edge can peek
+   through while scrolling. */
+.site-loader,
+.page-wipe {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100svh;
+  max-height: 100lvh;
+  contain: paint;
+  overscroll-behavior: none;
+}
+
+.site-loader.is-done {
+  pointer-events: none;
+}
+
+.page-wipe {
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.page-wipe.is-covering,
+.page-wipe.is-revealing {
+  visibility: visible;
+}
+
+@supports not (height: 100dvh) {
+  .site-loader,
+  .page-wipe {
+    height: 100vh;
+  }
+}
