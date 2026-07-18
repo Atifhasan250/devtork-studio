@@ -33,7 +33,7 @@ Create a Resend account, verify a sending domain, and set:
 RESEND_API_KEY=...
 CONTACT_TO_EMAIL=hello@devtork.studio
 CONTACT_FROM_EMAIL=DevTork Website <website@verified-domain.com>
-NEXT_PUBLIC_SITE_URL=https://devtork.studio
+NEXT_PUBLIC_SITE_URL=https://devtork.atifhasan.com
 ```
 
 The endpoint includes schema validation, a honeypot, output escaping, basic IP rate limiting, and generic failure responses. For high-volume deployment, replace the in-memory limiter with a shared Redis/Upstash limiter.
