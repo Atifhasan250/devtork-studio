@@ -1313,12 +1313,17 @@ body.cursor-ready .cursor-dot { opacity: 1; }
   .mobile-menu {
     padding-top: 76px;
     padding-bottom: max(76px, env(safe-area-inset-bottom));
+    grid-template-rows: 1fr auto;
   }
   .mobile-menu-label {
+    position: absolute;
+    top: calc(var(--header-h) / 2 - 4px);
+    left: 18px;
     margin-top: 0;
-    transform: translateY(-8px);
+    margin-bottom: 0;
+    transform: none;
   }
-  .mobile-nav { transform: translateY(-24px); }
+  .mobile-nav { transform: translateY(8px); }
   .mobile-nav a { padding-block:16px; }
   .principle:hover { padding-left:0; }
 }
