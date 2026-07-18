@@ -1310,8 +1310,15 @@ body.cursor-ready .cursor-dot { opacity: 1; }
   .hero-visual { top:24%; right:-28%; width:68vw; opacity:.17; }
   .page-hero { min-height:min(72svh,610px); padding-top:calc(var(--header-h) + 105px); padding-bottom:66px; }
   .page-hero .lead { margin-top:28px; line-height:1.45; }
-  .mobile-menu { padding-top:104px; }
-  .mobile-menu-label { margin-top:24px; }
+  .mobile-menu {
+    padding-top: 76px;
+    padding-bottom: max(76px, env(safe-area-inset-bottom));
+  }
+  .mobile-menu-label {
+    margin-top: 0;
+    transform: translateY(-8px);
+  }
+  .mobile-nav { transform: translateY(-24px); }
   .mobile-nav a { padding-block:16px; }
   .principle:hover { padding-left:0; }
 }
