@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Design, development, and digital growth studio.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f2efe8",
+    background_color: "#f4f0e8",
     theme_color: "#9200bd",
     icons: [
       { src: "/brand/app-icon-light.png", sizes: "512x512", type: "image/png" },

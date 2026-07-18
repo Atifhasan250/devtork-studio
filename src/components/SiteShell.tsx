@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent as ReactMouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import FloatingLines from "@/components/FloatingLines";
 
 const navItems = [
   { href: "/work", label: "Work", index: "01" },
@@ -10,6 +11,15 @@ const navItems = [
   { href: "/studio", label: "Studio", index: "03" },
   { href: "/insights", label: "Insights", index: "04" }
 ];
+
+const mobileNavItems = [
+  { href: "/", label: "Home", index: "01" },
+  ...navItems.map((item, index) => ({ ...item, index: String(index + 2).padStart(2, "0") }))
+];
+
+const homeLineGradient = ["#ac7cbb", "#a96cbb", "#8d159f", "#c28fca"];
+const homeLineCount = [5, 9, 13];
+const homeLineDistance = [8, 6, 4];
 
 type TransitionPhase = "idle" | "covering" | "revealing";
 
@@ -57,11 +67,11 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [creamNav, setCreamNav] = useState(pathname === "/studio");
   const [loading, setLoading] = useState(true);
   const [loaderMounted, setLoaderMounted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [transitionPhase, setTransitionPhase] = useState<TransitionPhase>("idle");
-  const [darkFirstSection, setDarkFirstSection] = useState(pathname === "/studio");
   const transitionPhaseRef = useRef<TransitionPhase>("idle");
   const navigationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -139,9 +149,10 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     let lenis: import("lenis").default | undefined;
     let rafId = 0;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduce) {
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    if (!reduce && !coarsePointer) {
       import("lenis").then(({ default: Lenis }) => {
-        lenis = new Lenis({ duration: 1.08, smoothWheel: true, wheelMultiplier: 0.9, touchMultiplier: 1.05 });
+        lenis = new Lenis({ duration: 1.18, smoothWheel: true, wheelMultiplier: 0.86, touchMultiplier: 1.02 });
         const raf = (time: number) => {
           lenis?.raf(time);
           rafId = requestAnimationFrame(raf);
@@ -159,10 +170,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     setMenuOpen(false);
     document.body.classList.remove("menu-open");
     setScrolled(false);
+    setCreamNav(pathname === "/studio");
     window.scrollTo(0, 0);
-
-    const firstSection = document.querySelector<HTMLElement>("#main > section:first-child, #main > div > section:first-child");
-    setDarkFirstSection(Boolean(firstSection?.classList.contains("section-dark") || firstSection?.classList.contains("section-purple")));
 
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal], [data-stagger]"));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -199,45 +208,106 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    let frame = 0;
+    const update = () => {
+      const header = document.querySelector<HTMLElement>(".site-header");
+      const probeY = (header?.getBoundingClientRect().bottom ?? 84) - 14;
+      const darkSectionUnderHeader = Array.from(document.querySelectorAll<HTMLElement>("#main .section-dark"))
+        .some((section) => {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= probeY && rect.bottom >= probeY;
+        });
+      const darkSection = (pathname === "/studio" && window.scrollY < 40) || darkSectionUnderHeader;
+      setCreamNav((current) => current === darkSection ? current : darkSection);
+    };
+    const onScroll = () => {
+      setScrolled(window.scrollY > 18);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", update);
+      cancelAnimationFrame(frame);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const progressBar = document.querySelector<HTMLElement>(".scroll-progress-bar");
-    const parallaxItems = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+    const parallaxItems = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]")).map((element) => ({
+      element,
+      current: 0,
+      target: 0,
+      speed: Number(element.dataset.parallaxSpeed ?? "0.045"),
+      limit: Number(element.dataset.parallaxLimit ?? "52")
+    }));
+
     let raf = 0;
+    let running = false;
+    let shouldMeasure = true;
+    const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 
-    const update = () => {
-      raf = 0;
+    const updateProgress = () => {
+      const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      progressBar?.style.setProperty("transform", `scaleX(${Math.min(1, window.scrollY / range)})`);
+    };
+
+    if (reduce) {
+      updateProgress();
+      return;
+    }
+
+    const measure = () => {
+      shouldMeasure = false;
       const viewportHeight = window.innerHeight;
-      const scrollRange = Math.max(1, document.documentElement.scrollHeight - viewportHeight);
-      progressBar?.style.setProperty("transform", `scaleX(${Math.min(1, window.scrollY / scrollRange)})`);
+      parallaxItems.forEach((item) => {
+        const rect = item.element.getBoundingClientRect();
+        if (rect.bottom < -180 || rect.top > viewportHeight + 180) return;
+        const distanceFromCentre = rect.top + rect.height / 2 - viewportHeight / 2;
+        item.target = clamp(-distanceFromCentre * item.speed, -item.limit, item.limit);
+      });
+    };
 
-      if (!reduce) {
-        parallaxItems.forEach((item) => {
-          const rect = item.getBoundingClientRect();
-          if (rect.bottom < -160 || rect.top > viewportHeight + 160) return;
-          const speed = Number(item.dataset.parallaxSpeed ?? "0.055");
-          const distanceFromCentre = rect.top + rect.height / 2 - viewportHeight / 2;
-          const offset = Math.max(-56, Math.min(56, -distanceFromCentre * speed));
-          item.style.setProperty("--parallax-y", `${offset.toFixed(2)}px`);
-        });
+    const animate = () => {
+      if (shouldMeasure) measure();
+      updateProgress();
+
+      let unsettled = false;
+      parallaxItems.forEach((item) => {
+        item.current += (item.target - item.current) * 0.1;
+        item.element.style.setProperty("--parallax-y", `${item.current.toFixed(2)}px`);
+        if (Math.abs(item.target - item.current) > 0.08) unsettled = true;
+      });
+
+      if (unsettled) raf = requestAnimationFrame(animate);
+      else {
+        running = false;
+        raf = 0;
       }
     };
 
-    const requestUpdate = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+    const wake = () => {
+      shouldMeasure = true;
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(animate);
+      }
     };
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    requestUpdate();
+
+    const onScroll = () => wake();
+    const onResize = () => wake();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    wake();
+
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(raf);
     };
   }, [pathname]);
@@ -339,11 +409,22 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     });
   };
 
-  const headerOnDark = (pathname === "/studio" || darkFirstSection) && !scrolled;
+  const headerOnDark = true;
 
   return (
-    <div onClickCapture={navigate}>
+    <div className={`site-shell ${pathname === "/" ? "is-home" : ""}`} onClickCapture={navigate}>
       <a className="skip-link" href="#main">Skip to content</a>
+      <div className="site-atmosphere" aria-hidden="true">
+        {!loading && (
+          <FloatingLines
+            linesGradient={homeLineGradient}
+            lineCount={homeLineCount}
+            lineDistance={homeLineDistance}
+            animationSpeed={0.38}
+            interactive={false}
+          />
+        )}
+      </div>
       <div className="scroll-progress" aria-hidden="true"><span className="scroll-progress-bar" /></div>
       {loaderMounted && (
         <div className={`site-loader ${loading ? "" : "is-done"}`} aria-hidden="true">
@@ -367,7 +448,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       )}
       <div className="cursor" aria-hidden="true" /><div className="cursor-dot" aria-hidden="true" />
 
-      <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${headerOnDark ? "on-dark" : ""}`}>
+      <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${creamNav ? "is-cream" : ""} ${headerOnDark ? "on-dark" : ""}`}>
         <div className="header-inner">
           <Brand />
           <nav className="nav" aria-label="Primary navigation">
@@ -388,8 +469,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       <div className="mobile-menu" aria-hidden={!menuOpen}>
         <div className="mobile-menu-label">Explore DevTork</div>
         <nav className="mobile-nav" aria-label="Mobile navigation">
-          {navItems.map((item) => <Link key={item.href} href={item.href}><small>{item.index}</small><span>{item.label}</span><b aria-hidden="true">↗</b></Link>)}
-          <Link href="/contact"><small>05</small><span>Start a project</span><b aria-hidden="true">↗</b></Link>
+          {mobileNavItems.map((item) => <Link key={item.href} href={item.href}><small>{item.index}</small><span>{item.label}</span><b aria-hidden="true">↗</b></Link>)}
+          <Link href="/contact"><small>06</small><span>Start a project</span><b aria-hidden="true">↗</b></Link>
         </nav>
         <div className="mobile-menu-bottom"><span>Bangladesh</span><a href="mailto:hello@devtork.studio">hello@devtork.studio</a></div>
       </div>

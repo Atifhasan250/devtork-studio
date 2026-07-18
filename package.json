@@ -1,9 +1,10 @@
 {
   "name": "devtork-studio",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "private": true,
+  "packageManager": "npm@10.8.2",
   "engines": {
-    "node": ">=20.9.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -18,6 +19,7 @@
     "react": "19.1.8",
     "react-dom": "19.1.8",
     "resend": "6.17.2",
+    "three": "^0.185.1",
     "zod": "4.4.3"
   },
   "devDependencies": {
@@ -25,6 +27,7 @@
     "@types/node": "24.0.15",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
+    "@types/three": "^0.185.1",
     "eslint": "9.32.0",
     "eslint-config-next": "15.5.20",
     "typescript": "5.8.3"

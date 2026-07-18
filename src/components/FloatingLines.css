@@ -1,0 +1,3 @@
+.floating-lines-container{position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:paint}
+.floating-lines-container canvas{display:block}
+@media (prefers-reduced-motion:reduce){.floating-lines-container canvas{opacity:.52}}

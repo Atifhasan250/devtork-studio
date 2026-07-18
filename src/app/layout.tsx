@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devtork.atifhasan.com";
-const previewImage = "/og/devtork-link-preview.jpg";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devtork1.vercel.app";
+const previewImage = `${siteUrl}/og/devtork-link-preview.jpg`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     default: "DevTork Studio — Design, Development & Digital Growth",
     template: "%s — DevTork Studio"
   },
-  description: "DevTork Studio designs and builds clear websites, apps, brands, and digital growth systems.",
+  description: "DevTork Studio designs and builds clear websites, apps, brands, and digital growth systems from Bangladesh.",
+  alternates: { canonical: "./" },
   keywords: ["digital agency", "web design", "web development", "mobile apps", "branding", "SEO", "Bangladesh"],
   authors: [{ name: "DevTork Studio" }],
   creator: "DevTork Studio",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
+    url: "./",
     siteName: "DevTork Studio",
     title: "DevTork Studio — Clear digital experiences",
     description: "Websites, apps, brands, and growth systems—designed clearly and built carefully.",
@@ -71,7 +72,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f2efe8" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f0e8" },
     { media: "(prefers-color-scheme: dark)", color: "#0c0910" }
   ],
   colorScheme: "light"
