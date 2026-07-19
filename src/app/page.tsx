@@ -9,8 +9,9 @@ const serviceRows = [
   ["01", "UI/UX design", "Clear structure, strong visual direction, and interfaces people understand quickly.", "/services#web", "#c77dff"],
   ["02", "Web development", "Fast, responsive, maintainable websites and web applications built for real use.", "/services#development", "#7dd3fc"],
   ["03", "Mobile apps", "Useful iOS and Android experiences with simple flows and a scalable foundation.", "/services#apps", "#f9c74f"],
-  ["04", "Brand identity", "A recognisable system for how your business looks, sounds, and feels.", "/services#brand", "#ff8fab"],
-  ["05", "SEO & growth", "Practical search, content, and campaigns that help the right people find you.", "/services#growth", "#86efac"]
+  ["04", "AI automation", "Practical AI workflows that reduce repetitive work while keeping people in control.", "/services#automation", "#fb923c"],
+  ["05", "Brand identity", "A recognisable system for how your business looks, sounds, and feels.", "/services#brand", "#ff8fab"],
+  ["06", "SEO & growth", "Practical search, content, and campaigns that help the right people find you.", "/services#growth", "#86efac"]
 ] as const;
 
 export default function HomePage() {
@@ -27,7 +28,7 @@ export default function HomePage() {
           <HeroVisual />
         </div>
       </section>
-      <div className="ticker" aria-hidden="true"><div className="ticker-track">{[...Array(2)].flatMap((_, set) => ["UI/UX design", "Web development", "Mobile apps", "Brand identity", "SEO", "Digital marketing"].map((item) => <div className="ticker-item" key={`${set}-${item}`}>{item}</div>))}</div></div>
+      <div className="ticker" aria-hidden="true"><div className="ticker-track">{[...Array(2)].flatMap((_, set) => ["UI/UX design", "Web development", "Mobile apps", "AI automation", "Brand identity", "SEO & growth"].map((item) => <div className="ticker-item" key={`${set}-${item}`}>{item}</div>))}</div></div>
       <section className="section"><div className="container"><div className="split-heading belief-heading"><p className="eyebrow" data-reveal>What we believe</p><h2 className="statement" data-reveal>A good digital experience should look distinctive <span className="soft">and still feel obvious to use.</span></h2></div></div></section>
       <section className="section section-dark motion-surface"><div className="container"><div className="section-head section-head-services"><div><p className="eyebrow" data-reveal>What we do</p><h2 data-reveal>One studio.<br />From idea to growth.</h2></div><div className="service-intro"><p className="lead muted" data-reveal>You do not need six different teams. We connect strategy, design, technology, and marketing around one clear goal.</p><Link className="btn btn-outline service-all-link" href="/services">All services <span className="btn-icon">↗</span></Link></div></div><ServiceList rows={serviceRows} /></div></section>
       <section className="section"><div className="container"><div className="section-head"><div><p className="eyebrow" data-reveal>Selected work</p><h2 data-reveal>Proof through<br />the work.</h2></div><Link className="btn btn-outline work-all-link" href="/work">View all projects <span className="btn-icon">↗</span></Link></div><div className="work-grid"><ProjectCard project={projects[0]} className="wide" /><ProjectCard project={projects[1]} className="narrow" /><ProjectCard project={projects[2]} /><ProjectCard project={projects[3]} /></div></div></section>
