@@ -411,6 +411,23 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   const headerOnDark = true;
 
+  useEffect(() => {
+    const links = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav > a");
+    let visibleIndex = 1;
+    links.forEach((link) => {
+      const href = new URL(link.href).pathname;
+      const isHome = href === "/";
+      const isCurrent = isHome ? pathname === "/" : pathname.startsWith(href);
+      link.hidden = isCurrent;
+      link.style.setProperty("display", isCurrent ? "none" : "", "important");
+      if (!isCurrent) {
+        const number = link.querySelector("small");
+        if (number) number.textContent = String(visibleIndex).padStart(2, "0");
+        visibleIndex += 1;
+      }
+    });
+  }, [pathname, menuOpen]);
+
   return (
     <div className={`site-shell ${pathname === "/" ? "is-home" : ""}`} onClickCapture={navigate}>
       <a className="skip-link" href="#main">Skip to content</a>
