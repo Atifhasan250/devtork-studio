@@ -152,7 +152,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
     if (!reduce && !coarsePointer) {
       import("lenis").then(({ default: Lenis }) => {
-        lenis = new Lenis({ duration: 1.18, smoothWheel: true, wheelMultiplier: 0.86, touchMultiplier: 1.02 });
+        lenis = new Lenis({ duration: 0.78, smoothWheel: true, wheelMultiplier: 0.95, touchMultiplier: 1.02 });
         const raf = (time: number) => {
           lenis?.raf(time);
           rafId = requestAnimationFrame(raf);

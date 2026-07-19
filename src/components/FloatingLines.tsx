@@ -70,7 +70,10 @@ export default function FloatingLines({
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isCompact = window.innerWidth < 780 || (navigator.hardwareConcurrency ?? 8) <= 4;
-    const targetFps = isCompact ? 30 : 45;
+    // This is a decorative full-viewport shader; keeping it at 30fps leaves
+    // enough GPU headroom for Lenis, layout, and input while preserving the
+    // perceived motion of the lines.
+    const targetFps = 30;
     const frameInterval = 1000 / targetFps;
     const counts = Array.isArray(lineCount) ? lineCount : [lineCount, lineCount, lineCount];
     const distances = Array.isArray(lineDistance) ? lineDistance : [lineDistance, lineDistance, lineDistance];
@@ -116,6 +119,7 @@ export default function FloatingLines({
     let targetInfluence = 0;
     let currentInfluence = 0;
     let animationFrame = 0;
+    let scrollResumeTimer: number | null = null;
     let lastFrame = 0;
     let elapsed = 0;
     let lastTick = performance.now();
@@ -123,7 +127,7 @@ export default function FloatingLines({
     const resize = () => {
       const width = container.clientWidth || 1;
       const height = container.clientHeight || 1;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCompact ? 1 : 1.35));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
       renderer.setSize(width, height, false);
       uniforms.iResolution.value.set(renderer.domElement.width, renderer.domElement.height, 1);
     };
@@ -160,6 +164,14 @@ export default function FloatingLines({
       if (reducedMotion) renderer.render(scene, camera);
       else animationFrame = requestAnimationFrame(render);
     };
+    const onScroll = () => {
+      if (!isCompact || reducedMotion) return;
+      cancelAnimationFrame(animationFrame);
+      if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
+      scrollResumeTimer = window.setTimeout(() => {
+        start();
+      }, 120);
+    };
     const visibilityChange = () => { if (!document.hidden) start(); };
 
     resize();
@@ -170,10 +182,13 @@ export default function FloatingLines({
       document.documentElement.addEventListener("pointerleave", pointerLeave);
     }
     document.addEventListener("visibilitychange", visibilityChange);
+    window.addEventListener("scroll", onScroll, { passive: true });
     start();
 
     return () => {
       cancelAnimationFrame(animationFrame);
+      if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
+      window.removeEventListener("scroll", onScroll);
       resizeObserver.disconnect();
       window.removeEventListener("pointermove", pointerMove);
       document.documentElement.removeEventListener("pointerleave", pointerLeave);

@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devtork1.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://devtork.atifhasan.com";
 const previewImage = `${siteUrl}/og/devtork-link-preview.jpg`;
 
 export const metadata: Metadata = {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     url: "./",
     siteName: "DevTork Studio",
     title: "DevTork Studio — Clear digital experiences",
-    description: "Websites, apps, brands, and growth systems—designed clearly and built carefully.",
+    description: "Websites, apps, brands, and growth systems that are designed clearly and built carefully.",
     images: [
       {
         url: previewImage,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "DevTork Studio — Clear digital experiences",
-    description: "Websites, apps, brands, and growth systems—designed clearly and built carefully.",
+    description: "Websites, apps, brands, and growth systems that are designed clearly and built carefully.",
     images: [previewImage]
   },
   icons: {

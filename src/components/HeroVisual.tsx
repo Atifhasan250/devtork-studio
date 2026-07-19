@@ -38,7 +38,10 @@ export default function HeroVisual() {
       <div className="float-card one"><strong>Design</strong>Clear, useful, memorable.</div>
       <div className="float-card two"><strong>Build</strong>Fast, secure, scalable.</div>
       <div className="float-card three"><strong>Grow</strong>Search, content, campaigns.</div>
-      <div className="scroll-cue">Scroll to explore</div>
+      <div className="scroll-cue">
+        <span>Scroll to explore</span>
+        <span className="scroll-cue-line" aria-hidden="true" />
+      </div>
     </div>
   );
 }
