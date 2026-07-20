@@ -12,7 +12,7 @@ export default function ContactPage() {
       <section className="page-hero page-hero-animated"><div className="container parallax-layer" data-parallax data-parallax-speed="0.035"><p className="eyebrow">Start a project</p><h1 className="page-title">Let’s begin with a clear conversation.</h1><p className="lead">A complete brief is not required. Share the goal, the problem, and what you know so far.</p></div></section>
       <section className="section section-paper-2 contact-section-tight">
         <div className="container">
-          <h2 style={{ textAlign: 'center', fontSize: 'clamp(50px, 4vw, 40px)', fontWeight: 700, marginBottom: 'clamp(40px, 5vw, 70px)', marginTop: 0 }}>Contact</h2>
+          <h2 style={{ textAlign: 'center', fontSize: 'clamp(50px, 4vw, 40px)', fontWeight: 700, marginBottom: 'clamp(40px, 5vw, 70px)', marginTop: 0 }}>Contact us</h2>
         </div>
         <div className="container contact-grid">
           <aside className="contact-sidebar">
