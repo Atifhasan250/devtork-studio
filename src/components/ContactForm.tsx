@@ -22,7 +22,7 @@ export default function ContactForm() {
       form.reset();
       setStatus({ type: "success", message: result.message || "Thanks. Your project inquiry has been sent." });
     } catch (error) {
-      setStatus({ type: "error", message: error instanceof Error ? error.message : "Something went wrong. Please email hello@devtork.studio." });
+      setStatus({ type: "error", message: error instanceof Error ? error.message : "Something went wrong. Please email hello@devtork.com." });
     } finally {
       setSubmitting(false);
     }
@@ -37,7 +37,7 @@ export default function ContactForm() {
       </div>
       <div className="field"><label htmlFor="company">Company or organisation</label><input id="company" name="company" maxLength={120} placeholder="Company name" /></div>
       <div className="field-row">
-        <div className="field"><label htmlFor="service">What do you need? *</label><select id="service" name="service" required defaultValue=""><option value="" disabled>Choose a service</option><option>UI/UX design</option><option>Web development</option><option>Mobile app</option><option>AI automation</option><option>Brand identity</option><option>SEO & growth</option><option>Full digital project</option><option>Not sure yet</option></select></div>
+        <div className="field"><label htmlFor="service">What do you need? *</label><select id="service" name="service" required defaultValue=""><option value="" disabled>Choose a service</option><option>UI/UX design</option><option>Web development</option><option>Mobile app</option><option>AI automation</option><option>Graphic design</option><option>SEO & growth</option><option>Full digital project</option><option>Not sure yet</option></select></div>
         <div className="field"><label htmlFor="budget">Estimated budget</label><select id="budget" name="budget" defaultValue=""><option value="">Choose a range</option><option>Under $500</option><option>$500–$1,000</option><option>$1,000–$2,000</option><option>$2,000–$5,000</option><option>$5,000–$10,000</option><option>$10,000+</option><option>Need help defining it</option></select></div>
       </div>
       <div className="field"><label htmlFor="timeline">Preferred timeline</label><select id="timeline" name="timeline" defaultValue=""><option value="">Choose a timeline</option><option>As soon as possible</option><option>1–2 months</option><option>3–4 months</option><option>5+ months</option><option>Still exploring</option></select></div>

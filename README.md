@@ -40,7 +40,7 @@ Open `http://localhost:3000`.
 
 ```env
 RESEND_API_KEY=...
-CONTACT_TO_EMAIL=hello@devtork.studio
+CONTACT_TO_EMAIL=hello@devtork.com
 CONTACT_FROM_EMAIL=DevTork Website <website@verified-domain.com>
 NEXT_PUBLIC_SITE_URL=https://devtork1.vercel.app
 ```

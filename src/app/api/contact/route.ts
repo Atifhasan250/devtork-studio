@@ -56,7 +56,7 @@ export async function POST(request: Request) {
   const to = process.env.CONTACT_TO_EMAIL;
   const from = process.env.CONTACT_FROM_EMAIL;
   if (!apiKey || !to || !from) {
-    return NextResponse.json({ message: "The contact form is not configured yet. Please email hello@devtork.studio directly." }, { status: 503 });
+    return NextResponse.json({ message: "The contact form is not configured yet. Please email hello@devtork.com directly." }, { status: 503 });
   }
 
   const inquiry = Object.fromEntries(Object.entries(parsed.data).map(([key, value]) => [key, escapeHtml(String(value))])) as Record<string, string>;
@@ -83,6 +83,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Thanks. Your project inquiry has been sent. We will reply within two working days." });
   } catch (error) {
     console.error("Contact form delivery failed", error);
-    return NextResponse.json({ message: "We could not deliver the inquiry right now. Please email hello@devtork.studio directly." }, { status: 502 });
+    return NextResponse.json({ message: "We could not deliver the inquiry right now. Please email hello@devtork.com directly." }, { status: 502 });
   }
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { services } from "@/data/content";
 
-export const metadata: Metadata = { title: "Services", description: "UI/UX design, web development, mobile apps, AI automation, brand identity, SEO, growth, and ongoing digital support." };
+export const metadata: Metadata = { title: "Services", description: "UI/UX design, web development, mobile apps, AI automation, graphic design, SEO, growth, and ongoing digital support." };
 
 export default function ServicesPage() {
   return (
