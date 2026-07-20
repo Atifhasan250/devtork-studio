@@ -14,10 +14,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/nodemailer": "^8.0.1",
     "lenis": "1.3.25",
     "lucide-react": "^1.25.0",
     "maplibre-gl": "^5.24.0",
     "next": "15.5.20",
+    "nodemailer": "^9.0.3",
     "react": "19.1.8",
     "react-dom": "19.1.8",
     "react-icons": "^5.7.0",
