@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Accordion from "@/components/Accordion";
-import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter, FaCalendar } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter, FaCalendarDays } from "react-icons/fa6";
 import MapEmbed from "@/components/MapEmbed";
 
 export const metadata: Metadata = { title: "Contact", description: "Tell DevTork Studio about your website, app, brand, or digital growth project." };
@@ -42,14 +42,14 @@ export default function ContactPage() {
                 <strong className="contact-card-title">Prefer to talk first?</strong>
                 <p className="contact-card-desc">Book a free 30-minute call with our manager.</p>
                 <a href="https://cal.com/devtork/30min" target="_blank" rel="noopener noreferrer" className="contact-card-btn">
-                  Book a Call <FaCalendar size={16} />
+                  Book a Call <FaCalendarDays size={16} />
                 </a>
               </div>
 
               {/* Location map */}
               <div className="contact-card" style={{ padding: 0, overflow: 'hidden' }}>
                 <div style={{ height: '240px', width: '100%' }}>
-                  <MapEmbed center={[90.4125, 23.8103]} zoom={8} />
+                  <MapEmbed />
                 </div>
                 <div style={{ padding: '16px 24px' }}>
                   <span className="contact-card-label">Location</span>

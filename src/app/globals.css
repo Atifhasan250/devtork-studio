@@ -26,7 +26,34 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--paper); }
+html { 
+  scroll-behavior: smooth; 
+  background: var(--paper); 
+  scrollbar-width: thin;
+  scrollbar-color: var(--purple) var(--ink);
+}
+
+/* Fix sticky header covering hash links */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 40px);
+}
+
+/* Custom Scrollbar for WebKit */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  border-radius: 10px;
+  border: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-bright);
+}
 body {
   margin: 0;
   color: var(--ink);
