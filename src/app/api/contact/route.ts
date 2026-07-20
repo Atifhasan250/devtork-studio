@@ -11,8 +11,7 @@ const inquirySchema = z.object({
   service: z.string().trim().min(2, "Please select a service.").max(80, "Invalid service selected."),
   budget: z.string().trim().max(80).optional().default(""),
   timeline: z.string().trim().max(80).optional().default(""),
-  message: z.string().trim().min(20, "Please write at least 20 characters so we can understand your needs.").max(3000, "Message must be under 3000 characters."),
-  _gotcha: z.string().optional().default("")
+  message: z.string().trim().min(20, "Please write at least 20 characters so we can understand your needs.").max(3000, "Message must be under 3000 characters.")
 });
 
 const requests = new Map<string, { count: number; resetAt: number }>();
@@ -62,8 +61,6 @@ export async function POST(request: Request) {
     console.error("Received Body:", body);
     return NextResponse.json({ message: "Please check the required fields and try again.", errors: parsed.error.flatten().fieldErrors }, { status: 400 });
   }
-  if (parsed.data._gotcha) return NextResponse.json({ message: "Thanks. Your inquiry has been received." });
-
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
   const to = process.env.CONTACT_TO_EMAIL || user;

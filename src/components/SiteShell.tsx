@@ -104,9 +104,12 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    const hasVisited = sessionStorage.getItem("devtork_visited");
+    
+    if (reduce || hasVisited) {
       setLoading(false);
       setProgress(100);
+      setLoaderMounted(false);
       document.body.classList.remove("is-loading");
       return;
     }
@@ -145,6 +148,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
       if (nextProgress >= 100) {
         exitTimer = window.setTimeout(() => {
+          sessionStorage.setItem("devtork_visited", "true");
           setLoading(false);
           document.body.classList.remove("is-loading");
         }, exitHold);

@@ -36,7 +36,6 @@ export default function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={submit} noValidate>
-      <input className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" name="_gotcha" />
       <div className="field-row">
         <div className={`field ${fieldErrors.name ? "has-error" : ""}`}><label htmlFor="name">Your name *</label><input id="name" name="name" required maxLength={80} placeholder="Your full name" />{fieldErrors.name && <div className="error-text">{fieldErrors.name[0]}</div>}</div>
         <div className={`field ${fieldErrors.email ? "has-error" : ""}`}><label htmlFor="email">Email address *</label><input id="email" name="email" type="email" required maxLength={160} placeholder="you@company.com" />{fieldErrors.email && <div className="error-text">{fieldErrors.email[0]}</div>}</div>
