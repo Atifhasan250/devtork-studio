@@ -183,6 +183,8 @@ h4 { font-size: clamp(21px, 2vw, 30px); font-weight: 650; }
 .cursor-dot { width: 5px; height: 5px; background: var(--purple); }
 body.cursor-ready .cursor,
 body.cursor-ready .cursor-dot { opacity: 1; }
+body.cursor-hidden .cursor,
+body.cursor-hidden .cursor-dot { opacity: 0 !important; }
 .cursor.is-link { width: 74px; height: 74px; background: rgba(146,0,189,.12); border-color: var(--purple); }
 .cursor.is-dark { border-color: var(--purple); }
 
@@ -581,17 +583,106 @@ body.cursor-ready .cursor-dot { opacity: 1; }
 .contact-item:last-child { border-bottom:1px solid var(--line); }
 .contact-item span { display:block; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.1em; }
 .contact-item a,.contact-item strong { display:block; margin-top:7px; font-size:19px; }
+
+/* Contact cards (new sidebar layout) */
+.contact-section-tight { padding: clamp(28px, 3vw, 44px) 0 clamp(48px, 6vw, 80px) !important; }
+.contact-cards { display:flex; flex-direction:column; gap:14px; }
+
+.contact-card {
+  padding: 22px 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.contact-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.contact-card-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: rgba(244,240,245,.5);
+  margin-bottom: 8px;
+}
+.contact-card-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(244,240,245,.9);
+  margin-top: 4px;
+}
+a.contact-card-value:hover { color: #ffffff; }
+
+/* CTA card */
+.contact-card-cta {
+  background: rgba(146,0,189,0.12);
+  border-color: rgba(146,0,189,0.3);
+}
+.contact-card-cta:hover {
+  background: rgba(146,0,189,0.18);
+  border-color: rgba(146,0,189,0.5);
+}
+.contact-card-title {
+  display: block;
+  font-size: 26px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 8px 0 10px;
+  letter-spacing: -.02em;
+}
+.contact-card-desc {
+  font-size: 16px;
+  color: rgba(244,240,245,.6);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+.contact-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 100px;
+  background: var(--purple);
+  border: 1px solid var(--purple);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color .3s ease, transform .25s var(--ease);
+}
+.contact-card-btn::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 0;
+  z-index: -1;
+  border-radius: 50% 50% 0 0;
+  background: #ffffff;
+  transition: height .45s var(--ease-out), border-radius .45s var(--ease-out);
+}
+.contact-card-btn:hover::before { height: 160%; border-radius: 0; }
+.contact-card-btn:hover { color: var(--ink); }
+.contact-card-btn:active { transform: scale(.98); }
 .contact-form { display:grid; gap:28px; }
 .field { display:grid; gap:10px; }
 .field-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-.field label { font-weight:700; font-size:13px; }
+.field label { font-weight:700; font-size:17px; }
 .field input,.field textarea,.field select {
   width:100%;
   border:0;
   border-bottom:1px solid var(--line);
   border-radius:0;
-  padding:15px 0;
+  padding:18px 0;
   outline:none;
+  font-size:18px;
   color:var(--ink);
   background:transparent;
   transition:border-color .25s;
@@ -2719,4 +2810,44 @@ body.menu-open .site-shell .site-header.is-cream .menu-toggle {
   /* Slightly more breathing room on both edges, including the mobile header. */
   :root { --container: calc(100% - 44px); }
   .mobile-menu { padding-inline: 22px; }
+}
+
+/* Social links hover effect */
+.social-links a {
+  transition: all 0.2s ease;
+}
+.social-links a:hover {
+  opacity: 1;
+}
+.social-links a.hover-facebook:hover { color: #1877F2; }
+.social-links a.hover-instagram:hover { color: #E1306C; }
+.social-links a.hover-x:hover { color: #ffffff; }
+.social-links a.hover-linkedin:hover { color: #0A66C2; }
+.social-links a.hover-whatsapp:hover { color: #25D366; }
+
+/* Company links hover effect */
+.footer-link-soft {
+  opacity: 0.75;
+}
+.footer-link-soft:hover {
+  opacity: 1 !important;
+}
+
+/* Legal links hover effect */
+.footer-legal a {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.footer-legal a:hover {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Increase footer brand size */
+.footer-brand .brand-text {
+  font-size: 2rem !important;
+}
+.footer-brand .brand-mark {
+  transform: scale(1.6) !important;
+  transform-origin: left center !important;
+  margin-right: 1.5rem !important;
 }
