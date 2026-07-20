@@ -119,17 +119,24 @@ export default function FloatingLines({
     let targetInfluence = 0;
     let currentInfluence = 0;
     let animationFrame = 0;
-    let scrollResumeTimer: number | null = null;
     let lastFrame = 0;
     let elapsed = 0;
     let lastTick = performance.now();
 
-    const resize = () => {
+    let resizeTimer: number | null = null;
+    
+    const applyResize = () => {
       const width = container.clientWidth || 1;
       const height = container.clientHeight || 1;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
       renderer.setSize(width, height, false);
       uniforms.iResolution.value.set(renderer.domElement.width, renderer.domElement.height, 1);
+      renderer.render(scene, camera);
+    };
+
+    const resize = () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(applyResize, 200);
     };
 
     const pointerMove = (event: PointerEvent) => {
@@ -164,17 +171,9 @@ export default function FloatingLines({
       if (reducedMotion) renderer.render(scene, camera);
       else animationFrame = requestAnimationFrame(render);
     };
-    const onScroll = () => {
-      if (!isCompact || reducedMotion) return;
-      cancelAnimationFrame(animationFrame);
-      if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
-      scrollResumeTimer = window.setTimeout(() => {
-        start();
-      }, 120);
-    };
     const visibilityChange = () => { if (!document.hidden) start(); };
 
-    resize();
+    applyResize();
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
     if (uniforms.interactive.value) {
@@ -182,13 +181,11 @@ export default function FloatingLines({
       document.documentElement.addEventListener("pointerleave", pointerLeave);
     }
     document.addEventListener("visibilitychange", visibilityChange);
-    window.addEventListener("scroll", onScroll, { passive: true });
     start();
 
     return () => {
       cancelAnimationFrame(animationFrame);
-      if (scrollResumeTimer) window.clearTimeout(scrollResumeTimer);
-      window.removeEventListener("scroll", onScroll);
+      if (resizeTimer) window.clearTimeout(resizeTimer);
       resizeObserver.disconnect();
       window.removeEventListener("pointermove", pointerMove);
       document.documentElement.removeEventListener("pointerleave", pointerLeave);

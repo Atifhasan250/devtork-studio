@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter } from "react-icons/fa6";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent as ReactMouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import FloatingLines from "@/components/FloatingLines";
@@ -32,6 +33,16 @@ function Brand() {
   );
 }
 
+const SocialLinks = ({ className }: { className?: string }) => (
+  <div className={`social-links ${className || ""}`} style={{ display: 'flex', gap: '1.25rem', marginTop: '2.5rem', opacity: 0.8 }}>
+    <a href="https://www.facebook.com/profile.php?id=61591844288765" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover-facebook"><FaFacebook size={26} /></a>
+    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover-instagram"><FaInstagram size={26} /></a>
+    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="hover-x"><FaXTwitter size={26} /></a>
+    <a href="https://www.linkedin.com/company/devtork-studio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover-linkedin"><FaLinkedin size={26} /></a>
+    <a href="https://wa.me/8801570297669" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover-whatsapp"><FaWhatsapp size={26} /></a>
+  </div>
+);
+
 function Footer() {
   return (
     <footer className="site-footer">
@@ -40,21 +51,32 @@ function Footer() {
           <div className="footer-brand">
             <Brand />
             <p>We design and build clear digital experiences for businesses, organisations, and ambitious ideas.</p>
-            <a className="text-link" href="mailto:hello@devtork.studio">hello@devtork.studio</a>
+            <SocialLinks />
           </div>
           <div className="footer-col">
-            <h4>Explore</h4>
-            {navItems.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}
+            <h4 style={{ fontSize: '1.25rem', color: '#ffffff', fontWeight: 'bold' }}>Company</h4>
+            {navItems.map((item) => <Link key={item.href} href={item.href} className="footer-link-soft">{item.label}</Link>)}
+            <Link href="/contact#faq" className="footer-link-soft">FAQ</Link>
+            <Link href="/contact" className="footer-link-soft">Contact</Link>
           </div>
           <div className="footer-col">
-            <h4>Start</h4>
-            <Link href="/contact">Project inquiry</Link>
-            <Link href="/contact#faq">Common questions</Link>
-            <a href="mailto:hello@devtork.studio">Email us</a>
+            <h4 style={{ fontSize: '1.25rem', color: '#ffffff', fontWeight: 'bold' }}>Get in touch</h4>
+            <div style={{ marginBottom: '1rem' }}>
+              <span style={{ display: 'block', fontSize: '0.875rem', opacity: 0.6, marginBottom: '0.25rem' }}>WhatsApp:</span>
+              <a href="https://wa.me/8801570297669" target="_blank" rel="noopener noreferrer">+8801570297669</a>
+            </div>
+            <div>
+              <span style={{ display: 'block', fontSize: '0.875rem', opacity: 0.6, marginBottom: '0.25rem' }}>Email:</span>
+              <a href="mailto:hello@devtork.com">hello@devtork.com</a>
+            </div>
+            <div style={{ marginTop: '1rem' }}>
+              <span style={{ display: 'block', fontSize: '0.875rem', opacity: 0.6, marginBottom: '0.25rem' }}>Location:</span>
+              <span style={{ display: 'block' }}>Dhaka, Bangladesh</span>
+            </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} DevTork Studio. Built with care.</span>
+          <span>© {new Date().getFullYear()} DevTork Studio. All rights reserved.</span>
           <div className="footer-legal"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
         </div>
       </div>
@@ -171,7 +193,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     document.body.classList.remove("menu-open");
     setScrolled(false);
     setCreamNav(pathname === "/studio");
-    window.scrollTo(0, 0);
+    if (!window.location.hash) window.scrollTo(0, 0);
 
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal], [data-stagger]"));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -487,9 +509,9 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         <div className="mobile-menu-label">Explore DevTork</div>
         <nav className="mobile-nav" aria-label="Mobile navigation">
           {mobileNavItems.map((item) => <Link key={item.href} href={item.href}><small>{item.index}</small><span>{item.label}</span><b aria-hidden="true">↗</b></Link>)}
-          <Link href="/contact"><small>06</small><span>Start a project</span><b aria-hidden="true">↗</b></Link>
+          <Link href="/contact"><small>06</small><span>Contact</span><b aria-hidden="true">↗</b></Link>
         </nav>
-        <div className="mobile-menu-bottom"><span>Bangladesh</span><a href="mailto:hello@devtork.studio">hello@devtork.studio</a></div>
+        <div className="mobile-menu-bottom"><span>Bangladesh</span><a href="mailto:hello@devtork.com">hello@devtork.com</a></div>
       </div>
 
       <main key={pathname} id="main" className="page-enter">{children}</main>
