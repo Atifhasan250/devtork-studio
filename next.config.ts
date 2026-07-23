@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/atifhasan/portfolio/projects/**" }
+    ]
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   }

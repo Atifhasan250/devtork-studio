@@ -7,7 +7,8 @@ export type Project = {
   type: string;
   services: string;
   status: string;
-  artClass: string;
+  image: string;
+  imageAlt: string;
   badge: string;
   tags: string;
   filters: string[];
@@ -21,184 +22,128 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "leados",
-    name: "LeadOS",
-    category: "AI product platform",
-    intro: "A clear sales workspace that turns scattered inquiries into qualified leads, useful proposals, and timely follow-ups.",
+    slug: "it-resource-zone",
+    name: "IT Resource Zone",
+    category: "Digital learning platform",
+    intro: "A complete learning environment where beginner IT students can take exams, follow a study plan, build consistent habits, and understand their progress in one place.",
     year: "2026",
-    type: "Studio product",
-    services: "Product strategy, UX/UI, full-stack development",
-    status: "In development",
-    artClass: "art-leados",
-    badge: "Studio product",
-    tags: "AI product · UX/UI · Full-stack",
-    filters: ["product", "web"],
-    challenge: "Agencies and freelancers often receive client requests from many places. Important details get lost, proposals take too long, and follow-ups are easy to miss.",
-    approach: "We designed one simple flow: capture the inquiry, understand the need, ask the right questions, prepare a proposal, and keep every follow-up visible. AI supports the work, but the user stays in control.",
-    solution: "LeadOS combines lead tracking, requirement discovery, proposal drafting, pipeline management, and reminders in one focused dashboard.",
+    type: "Production learning platform",
+    services: "Product design, full-stack development, security, platform operations",
+    status: "Live",
+    image: "https://ik.imagekit.io/atifhasan/portfolio/projects/it-resource-zone_1782389669110.png?updatedAt=1782389661095",
+    imageAlt: "IT Resource Zone student learning dashboard and exam platform",
+    badge: "Live platform",
+    tags: "EdTech · Exams · Learning tools",
+    filters: ["education", "platform"],
+    challenge: "Beginner IT students often move between separate exam links, videos, notes, task lists, and chat announcements. That fragmentation makes it difficult to practise regularly, see genuine progress, or know what to study next. Administrators face the other side of the problem: publishing exams, organising resources, supporting students, and protecting assessment integrity across disconnected tools.",
+    approach: "The platform was organised around a student's full learning cycle rather than a collection of pages: discover an exam, complete a timed attempt, review the result, continue with relevant resources, and return to a practical weekly plan. Public discovery, private student data, and administration were deliberately separated so each audience receives the right level of access and complexity.",
+    solution: "IT Resource Zone brings live and practice exams, instant scoring, leaderboards, curated learning resources, habit tracking, weekly planning, and personal progress reporting into one responsive platform. A separate administrative system manages exams, questions, users, notifications, resources, and audit history, while dedicated authentication and integrity controls protect student attempts and private information.",
     highlights: [
-      "One inbox for website, email, WhatsApp, and meeting leads",
-      "Plain-language AI summaries and qualification suggestions",
-      "Reusable proposal blocks with human review before sending",
-      "Simple pipeline stages and follow-up reminders",
-      "Role-based access, audit history, and secure document handling"
+      "Scheduled live assessments and reusable practice exams with timed attempts, answer locking, instant results, and private review",
+      "Public global and exam-specific leaderboards that make achievement visible without exposing personal dashboards",
+      "A student workspace combining progress summaries, recommendations, study planning, daily habits, streaks, and report export",
+      "A curated resource hub for video lessons, PDFs, images, files, and links with lesson-level progress tracking",
+      "Independent student and administrator security layers, supported by validation, rate limiting, audit logs, and monitoring"
     ],
     metrics: [
-      { value: "1", label: "clear workspace" },
-      { value: "5", label: "core sales steps" },
-      { value: "24/7", label: "lead visibility" }
+      { value: "2", label: "live and practice exam modes" },
+      { value: "2", label: "separated access systems" },
+      { value: "PWA", label: "responsive, installable experience" }
     ],
-    next: "unihub"
+    next: "stitchdrive"
   },
   {
-    slug: "unihub",
-    name: "UniHub",
-    category: "Campus platform",
-    intro: "A central place for university clubs to publish events, manage members, and keep campus activities easy to discover.",
+    slug: "stitchdrive",
+    name: "StitchDrive",
+    category: "Cloud storage workspace",
+    intro: "A single, secure workspace that combines the available storage from multiple Google Drive accounts and makes every file manageable from one dashboard.",
     year: "2026",
-    type: "Platform build",
-    services: "UX/UI, web development, workflow design",
-    status: "Active development",
-    artClass: "art-unihub",
-    badge: "Platform",
-    tags: "Campus platform · Web app",
-    filters: ["platform", "web"],
-    challenge: "Club events, approvals, member records, and announcements are often handled through separate chats, forms, and spreadsheets.",
-    approach: "We mapped the real roles first—students, club leaders, and administrators—then reduced each workflow to the fewest clear steps.",
-    solution: "UniHub brings event creation, club requests, role-based dashboards, registration, and status tracking into one responsive platform.",
+    type: "Full-stack web application",
+    services: "Product design, Google Drive integration, full-stack development",
+    status: "Live demo",
+    image: "https://ik.imagekit.io/atifhasan/portfolio/projects/stitchdrive_1782390387086.png?updatedAt=1782390379308",
+    imageAlt: "StitchDrive dashboard showing files and pooled Google Drive storage",
+    badge: "Live demo",
+    tags: "Cloud storage · Google Drive · SaaS",
+    filters: ["productivity", "platform"],
+    challenge: "People who depend on several Google accounts technically have more storage, but they do not have one place to see or manage it. Files remain split between separate Drives, available capacity is hard to compare, and routine actions require constant account switching. The product also has to handle sensitive Google access credentials without weakening user isolation.",
+    approach: "StitchDrive treats connected accounts as one storage pool while keeping the original Google Drive structure intact. The experience centres on familiar file-management actions, and the backend chooses the account with the most available space when a user uploads. Authentication, signed OAuth state, encrypted tokens, and per-user database records were designed as part of the core workflow rather than added later.",
+    solution: "The resulting dashboard lets a user connect multiple Google accounts, browse files and folders across them, search and sort content, upload to the best available account, move and rename items, manage sharing, and recover files from trash. Storage analytics reveal how capacity is distributed, while every Drive operation is routed through a unified Next.js application and Google Drive API integration.",
     highlights: [
-      "Role-based dashboards for students, club leaders, and administrators",
-      "Secure registration, login, and permission-aware navigation",
-      "Event publishing, registration, and approval workflows",
-      "Reusable components and maintainable project structure",
-      "Mobile-first layouts for everyday campus use"
+      "Multiple Google Drive accounts presented as one understandable storage pool",
+      "Smart upload routing that selects the connected account with the most free space",
+      "Unified browsing, search, sorting, moving, sharing, trash, restore, and permanent deletion workflows",
+      "Dedicated views for personal files, shared items, connected accounts, storage statistics, and settings",
+      "Clerk-based user isolation with OAuth tokens encrypted before database storage"
     ],
     metrics: [
-      { value: "3", label: "user roles" },
-      { value: "1", label: "shared platform" },
-      { value: "100%", label: "responsive flow" }
+      { value: "N×15GB", label: "expandable pooled capacity" },
+      { value: "1", label: "unified file workspace" },
+      { value: "At rest", label: "encrypted OAuth tokens" }
     ],
-    next: "scholarguard"
+    next: "classnote-sorter"
   },
   {
-    slug: "scholarguard",
-    name: "ScholarGuard",
-    category: "Verification system",
-    intro: "A scholarship application and verification platform designed to make eligibility, review, and fraud checks more transparent.",
+    slug: "classnote-sorter",
+    name: "Classnote Sorter",
+    category: "Document productivity tool",
+    intro: "A privacy-first PDF workspace that helps students turn scattered class notes into organised, printer-friendly documents without uploading the content for processing.",
     year: "2026",
-    type: "Secure web system",
-    services: "System design, database, web development",
-    status: "Prototype complete",
-    artClass: "art-scholar",
-    badge: "Secure system",
-    tags: "Verification · Database · UX",
-    filters: ["platform", "web"],
-    challenge: "Manual scholarship review can be slow, inconsistent, and difficult to audit when applications and supporting documents grow.",
-    approach: "We separated eligibility, document verification, fraud signals, ranking, and final review so each decision is understandable and traceable.",
-    solution: "ScholarGuard uses structured applications, Oracle-based rules, verification workflows, ranking logic, and audit logs to support responsible decisions.",
+    type: "Browser-based PDF utility",
+    services: "Product design, PDF engineering, front-end development",
+    status: "Working product",
+    image: "https://ik.imagekit.io/atifhasan/portfolio/projects/classnote-sorter_1782390627469.png?updatedAt=1782390619617",
+    imageAlt: "Classnote Sorter PDF editing and print layout workspace",
+    badge: "Productivity tool",
+    tags: "PDF tools · Privacy · Print workflow",
+    filters: ["education", "productivity"],
+    challenge: "Class notes frequently arrive as several PDFs in the wrong order, with unwanted pages, dark backgrounds, inconsistent numbering, or layouts that waste paper. Fixing those problems usually means moving between multiple utilities—or uploading private academic documents to a remote conversion service—before a file is ready to share or print.",
+    approach: "The product was designed as one continuous document-preparation workspace. Processing-heavy operations run in the browser with JavaScript and WebAssembly, keeping note content on the user's device and providing immediate feedback. Reversible editing and clear print controls reduce the risk of losing work while experimenting with page order and output settings.",
+    solution: "Classnote Sorter supports batch PDF import, cross-document page reordering, page removal, merging, configurable N-up sheet layouts, true black-and-white conversion, colour inversion, and custom page numbering. Users can prepare compact print files or clean digital handouts from the same interface, with an undo history available throughout the workflow.",
     highlights: [
-      "Student and verification-officer workflows",
-      "Eligibility rules and explainable scoring",
-      "Document review with clear verification states",
-      "Fraud flags that support—not replace—human decisions",
-      "Audit logs for important changes and actions"
+      "Drag-and-drop batch import for organising several source documents together",
+      "Page-level reorder, removal, and merge operations across PDFs",
+      "Configurable N-up printing with columns, orientation, and margins to reduce paper use",
+      "Strict black-and-white conversion and dark-note inversion for more economical printing",
+      "Local browser processing and undo history for a private, reversible workflow"
     ],
     metrics: [
-      { value: "5", label: "review stages" },
-      { value: "1", label: "audit trail" },
-      { value: "0", label: "hidden decisions" }
+      { value: "Local", label: "on-device document processing" },
+      { value: "N-up", label: "paper-saving layouts" },
+      { value: "Undo", label: "reversible editing history" }
     ],
-    next: "identity"
+    next: "voltmind"
   },
   {
-    slug: "identity",
-    name: "DevTork Identity",
-    category: "Brand system",
-    intro: "A focused visual identity that combines a geometric studio mark with a flexible digital-first design system.",
+    slug: "voltmind",
+    name: "VoltMind",
+    category: "Real-time energy monitoring",
+    intro: "A live office energy system that helps teams see what is running, understand electricity use, and receive timely alerts through the dashboard and Discord.",
     year: "2026",
-    type: "Internal brand",
-    services: "Brand direction, visual identity, digital system",
-    status: "Live system",
-    artClass: "art-identity",
-    badge: "Brand system",
-    tags: "Brand direction · Motion",
-    filters: ["brand"],
-    challenge: "The studio needed to feel technical without becoming cold, and creative without becoming difficult to understand.",
-    approach: "We kept the system simple: a recognisable mark, strong typography, a calm neutral base, and purple used as a purposeful signal.",
-    solution: "The result is a flexible identity for websites, apps, presentations, social content, and product interfaces.",
+    type: "IoT and software prototype",
+    services: "System design, dashboard UX, real-time backend, bot integration",
+    status: "Live prototype",
+    image: "https://ik.imagekit.io/atifhasan/portfolio/projects/24267_1783620957415.jpg?updatedAt=1783620959292",
+    imageAlt: "VoltMind office energy dashboard with room and device monitoring",
+    badge: "Live prototype",
+    tags: "IoT · Real-time dashboard · Discord",
+    filters: ["iot", "platform"],
+    challenge: "In a small office where daily coordination happens on Discord, fans and lights can remain on after people leave. The team sees the higher electricity bill later, but has no shared, real-time view of which device caused the waste or when the problem began.",
+    approach: "VoltMind establishes one trusted backend for the office state and lets every interface read from it. A simulator changes device states, the backend recalculates power and alert conditions, and Server-Sent Events update the dashboard without refreshes. The Discord assistant requests the same snapshot for every command, preventing the web experience and team chat from reporting different information.",
+    solution: "The prototype monitors 15 fans and lights across three rooms through a live dashboard with office, room, analytics, and alert views. It calculates current and estimated energy use, identifies after-hours or unusually long operation, and sends deduplicated alerts to Discord. Optional history storage supports longer-term analysis, while Gemini may improve the wording of verified bot responses but never generates device data or changes the system state.",
     highlights: [
-      "Geometric DT monogram",
-      "High-contrast dark and light versions",
-      "Purple-led accent system",
-      "Clear typography hierarchy",
-      "Motion rules for loaders, transitions, and interface feedback"
+      "Live monitoring for two fans and three lights in each of three office rooms",
+      "Server-Sent Events that keep dashboard state and alerts current without manual refresh",
+      "Office-wide and room-level power summaries with historical energy analytics",
+      "After-hours, all-devices-on, and two-hour continuous-running alert detection",
+      "Discord commands and proactive notifications backed by the same verified office snapshot"
     ],
     metrics: [
-      { value: "1", label: "recognisable mark" },
-      { value: "4", label: "core colours" },
-      { value: "∞", label: "digital uses" }
+      { value: "15", label: "simulated fans and lights" },
+      { value: "3", label: "office rooms monitored" },
+      { value: "2", label: "synchronised interfaces" }
     ],
-    next: "commerce"
-  },
-  {
-    slug: "commerce",
-    name: "Northline Commerce",
-    category: "E-commerce concept",
-    intro: "A fast, product-first shopping experience designed to make browsing and buying feel effortless on every screen.",
-    year: "2026",
-    type: "Concept study",
-    services: "UX/UI, commerce design, front-end direction",
-    status: "Concept",
-    artClass: "art-commerce",
-    badge: "Concept study",
-    tags: "E-commerce · UX/UI · Front-end",
-    filters: ["web", "product"],
-    challenge: "Many stores show too much at once, making it hard for customers to compare products and reach checkout with confidence.",
-    approach: "We prioritised product clarity, simple filters, useful details, and a checkout flow with no unnecessary steps.",
-    solution: "A modular commerce system with strong product pages, mobile-first navigation, and accessible interaction patterns.",
-    highlights: [
-      "Product-first visual hierarchy",
-      "Simple filters and search",
-      "Fast mobile browsing",
-      "Clear delivery and return information",
-      "Reusable campaign and collection blocks"
-    ],
-    metrics: [
-      { value: "3", label: "checkout steps" },
-      { value: "AA", label: "accessibility target" },
-      { value: "<2s", label: "performance goal" }
-    ],
-    next: "impact"
-  },
-  {
-    slug: "impact",
-    name: "Impact Portal",
-    category: "Civic information platform",
-    intro: "A clear digital space for programmes, activities, outcomes, and community stories to be understood by more people.",
-    year: "2026",
-    type: "Concept platform",
-    services: "Information architecture, UX/UI, content system",
-    status: "Concept",
-    artClass: "art-impact",
-    badge: "Information platform",
-    tags: "Content system · Accessibility · UX",
-    filters: ["platform", "web"],
-    challenge: "Important programme information often sits across reports, presentations, and separate files that are difficult for the public to explore.",
-    approach: "We organised content around people’s questions: what happened, where, who joined, what changed, and what comes next.",
-    solution: "A multilingual, accessible portal with programme pages, outcome stories, searchable resources, and simple visual reporting.",
-    highlights: [
-      "Plain-language programme summaries",
-      "Outcome-focused story pages",
-      "Searchable document library",
-      "Accessible, multilingual structure",
-      "Responsive dashboards for key indicators"
-    ],
-    metrics: [
-      { value: "2", label: "language-ready" },
-      { value: "1", label: "resource library" },
-      { value: "AA", label: "accessibility target" }
-    ],
-    next: "leados"
+    next: "it-resource-zone"
   }
 ];
 

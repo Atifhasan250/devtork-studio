@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import ProjectArtwork from "@/components/ProjectArtwork";
 import { projects } from "@/data/content";
 
 const filters = [
   ["all", "All work"],
-  ["product", "Products"],
-  ["web", "Web"],
+  ["education", "Education"],
+  ["productivity", "Productivity"],
   ["platform", "Platforms"],
-  ["brand", "Brand"]
+  ["iot", "IoT"]
 ] as const;
 
 export default function WorkFilter() {
@@ -27,7 +28,7 @@ export default function WorkFilter() {
           return (
             <article key={project.slug} className={`work-card ${show ? "" : "is-hidden"}`} data-reveal>
               <Link className="work-card-link" href={`/work/${project.slug}`}>
-                <div className="work-visual"><span className="work-badge">{project.badge}</span><div className={`work-art ${project.artClass}`} /></div>
+                <div className="work-visual"><span className="work-badge">{project.badge}</span><ProjectArtwork project={project} sizes="(max-width: 760px) 100vw, 50vw" /></div>
                 <div className="work-meta"><h3 className="work-name">{project.name}</h3><p className="work-tags">{project.tags}</p></div>
               </Link>
             </article>
