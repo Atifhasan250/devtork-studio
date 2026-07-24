@@ -8,7 +8,7 @@ const inquirySchema = z.object({
   name: z.string().trim().min(2, "Please enter your full name.").max(80, "Name is too long."),
   email: z.string().email("Please enter a valid email address.").max(160, "Email is too long."),
   company: z.string().trim().max(120, "Company name is too long.").optional().default(""),
-  service: z.string().trim().min(2, "Please select a service.").max(80, "Invalid service selected."),
+  service: z.string().trim().min(2, "Please select a service.").max(300, "Invalid service selected."),
   budget: z.string().trim().max(80).optional().default(""),
   timeline: z.string().trim().max(80).optional().default(""),
   message: z.string().trim().min(20, "Please write at least 20 characters so we can understand your needs.").max(3000, "Message must be under 3000 characters.")
