@@ -90,7 +90,7 @@ export default function ServiceList({ rows }: ServiceListProps) {
           <span className="service-no">{number}</span>
           <h3 className="service-title">{title}</h3>
           <p className="service-desc">{description}</p>
-          <span className="service-arrow" aria-hidden="true">↗</span>
+          <span className="service-arrow" aria-hidden="true">↗&#xFE0E;</span>
         </Link>
       ))}
 

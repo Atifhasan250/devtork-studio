@@ -89,6 +89,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           rel="stylesheet"
         />
       </head>
+      {/* Trigger HMR */}
       <body><SiteShell>{children}</SiteShell></body>
     </html>
   );

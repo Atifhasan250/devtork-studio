@@ -8,7 +8,7 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
           <p className="eyebrow">Something went wrong</p>
           <h1>One small error.<br />One clear next step.</h1>
           <p className="lead muted not-found-copy">Please try loading this page again.</p>
-          <button className="btn btn-light top-gap" onClick={reset}>Try again ↗</button>
+          <button className="btn btn-light top-gap" onClick={reset}>Try again ↗&#xFE0E;</button>
         </div>
       </div>
     </section>

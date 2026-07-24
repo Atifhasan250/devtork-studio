@@ -101,66 +101,21 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const hasVisited = sessionStorage.getItem("devtork_visited");
-    
-    if (reduce || hasVisited) {
+    if (document.readyState === "complete") {
       setLoading(false);
-      setProgress(100);
-      setLoaderMounted(false);
       document.body.classList.remove("is-loading");
       return;
     }
 
-    const minimumDuration = 2300;
-    const exitHold = 180;
-    const startedAt = performance.now();
-    let resourcesReady = document.readyState === "complete";
-    let animationFrame = 0;
-    let exitTimer: number | null = null;
-
-    const markResourcesReady = () => { resourcesReady = true; };
-    window.addEventListener("load", markResourcesReady, { once: true });
     document.body.classList.add("is-loading");
-
-    const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
-    const easeInOutCubic = (value: number) => value < 0.5
-      ? 4 * value * value * value
-      : 1 - Math.pow(-2 * value + 2, 3) / 2;
-
-    const tick = (now: number) => {
-      const elapsed = now - startedAt;
-      const ratio = Math.min(1, elapsed / minimumDuration);
-      let nextProgress: number;
-
-      if (ratio < 0.62) {
-        nextProgress = easeOutCubic(ratio / 0.62) * 78;
-      } else {
-        nextProgress = 78 + easeInOutCubic((ratio - 0.62) / 0.38) * 18;
-      }
-
-      if (ratio >= 1 && resourcesReady) nextProgress = 100;
-      else nextProgress = Math.min(96, nextProgress);
-
-      setProgress(Math.round(nextProgress));
-
-      if (nextProgress >= 100) {
-        exitTimer = window.setTimeout(() => {
-          sessionStorage.setItem("devtork_visited", "true");
-          setLoading(false);
-          document.body.classList.remove("is-loading");
-        }, exitHold);
-        return;
-      }
-      animationFrame = requestAnimationFrame(tick);
+    
+    const handleLoad = () => {
+      setLoading(false);
+      document.body.classList.remove("is-loading");
     };
 
-    animationFrame = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener("load", markResourcesReady);
-      cancelAnimationFrame(animationFrame);
-      if (exitTimer) window.clearTimeout(exitTimer);
-    };
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   useEffect(() => {
@@ -469,17 +424,20 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       {loaderMounted && (
         <div className={`site-loader ${loading ? "" : "is-done"}`} aria-hidden="true">
           <div className="loader-grid" />
-          <div className="loader-inner">
-            <div className="loader-top">
-              <span>DevTork® / Digital Studio</span>
-              <span className="loader-stage">{progress < 31 ? "Strategy" : progress < 68 ? "Design" : progress < 94 ? "Build" : "Ready"}</span>
-            </div>
-            <div className="loader-core">
-              <div className="loader-orbit"><span className="loader-mark" /></div>
-              <div className="loader-count"><span className="loader-number">{String(progress).padStart(2, "0")}</span><small>%</small></div>
-            </div>
-            <div className="loader-line"><span className="loader-progress" style={{ width: `${progress}%` }} /></div>
-            <div className="loader-copy"><span>Shaping a clear first impression</span><span>Loading the experience</span></div>
+          <div className="loader-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+            <div className="dynamic-spinner" style={{
+              width: '80px',
+              height: '80px',
+              border: '4px solid rgba(255, 255, 255, 0.1)',
+              borderTopColor: '#ffffff',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <style>{`
+              @keyframes spin {
+                to { transform: rotate(360deg); }
+              }
+            `}</style>
           </div>
         </div>
       )}
@@ -503,7 +461,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="header-actions">
-            <Link className="header-cta" data-magnetic href="/contact"><span>Contact</span><b aria-hidden="true">↗</b></Link>
+            <Link className="header-cta" data-magnetic href="/contact"><span>Contact</span><b aria-hidden="true">↗&#xFE0E;</b></Link>
             <button className="menu-toggle" type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={toggleMenu}><span /><span /></button>
           </div>
         </div>
@@ -512,8 +470,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       <div className="mobile-menu" aria-hidden={!menuOpen}>
         <div className="mobile-menu-label">Explore DevTork</div>
         <nav className="mobile-nav" aria-label="Mobile navigation">
-          {mobileNavItems.map((item) => <Link key={item.href} href={item.href}><small>{item.index}</small><span>{item.label}</span><b aria-hidden="true">↗</b></Link>)}
-          <Link href="/contact"><small>06</small><span>Contact</span><b aria-hidden="true">↗</b></Link>
+          {mobileNavItems.map((item) => <Link key={item.href} href={item.href}><small>{item.index}</small><span>{item.label}</span><b aria-hidden="true">↗&#xFE0E;</b></Link>)}
+          <Link href="/contact"><small>06</small><span>Contact</span><b aria-hidden="true">↗&#xFE0E;</b></Link>
         </nav>
         <div className="mobile-menu-bottom"><span>Bangladesh</span><a href="mailto:hello@devtork.com">hello@devtork.com</a></div>
       </div>

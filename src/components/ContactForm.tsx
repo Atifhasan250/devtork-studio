@@ -48,7 +48,7 @@ export default function ContactForm() {
       <div className={`field ${fieldErrors.timeline ? "has-error" : ""}`}><label htmlFor="timeline">Preferred timeline</label><select id="timeline" name="timeline" defaultValue=""><option value="">Choose a timeline</option><option>As soon as possible</option><option>1–2 months</option><option>3–4 months</option><option>5+ months</option><option>Still exploring</option></select>{fieldErrors.timeline && <div className="error-text">{fieldErrors.timeline[0]}</div>}</div>
       <div className={`field ${fieldErrors.message ? "has-error" : ""}`}><label htmlFor="message">Tell us about the project *</label><textarea id="message" name="message" required minLength={20} maxLength={3000} placeholder="What are you trying to achieve? Who is it for? What is not working today?" />{fieldErrors.message && <div className="error-text">{fieldErrors.message[0]}</div>}</div>
       {status.type !== "idle" && <div className={`form-status is-visible ${status.type === "error" ? "is-error" : ""}`} role="status">{status.message}</div>}
-      <div><button className="btn" data-magnetic type="submit" disabled={submitting}>{submitting ? "Sending…" : "Send project inquiry ↗"}</button></div>
+      <div><button className="btn" data-magnetic type="submit" disabled={submitting}>{submitting ? "Sending…" : "Send project inquiry \u2197\uFE0E"}</button></div>
       <p className="form-note">We usually reply within two working days. Your information is used only to respond to this inquiry.</p>
     </form>
   );
