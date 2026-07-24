@@ -34,6 +34,18 @@ export default function ContactForm() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isProposal && window.innerWidth <= 768) {
+      setTimeout(() => {
+        const formElement = document.getElementById("contact-form");
+        if (formElement) {
+          const y = formElement.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 100);
+    }
+  }, [isProposal]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     const newState = { ...formDataState, [name]: value };
