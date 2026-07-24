@@ -472,6 +472,9 @@ body.cursor-hidden .cursor-dot { opacity: 0 !important; }
 .big-cta { overflow: hidden; }
 .big-cta-inner { min-height: 72vh; display: grid; align-items: center; text-align: center; }
 .big-cta h2 { max-width: 1180px; margin-inline: auto; }
+@media (min-width: 769px) {
+  .big-cta h2 { font-size: clamp(40px, 4.5vw, 64px); }
+}
 .big-cta .cta-pill { display: inline-flex; align-items: center; height: 64px; border-radius: 32px; background: var(--ink); border: 1px solid var(--ink); padding: 0 8px; margin: 42px auto 0; color: #fff; font-weight: 500; font-size: 1.125rem; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); position: relative; text-decoration: none; overflow: hidden; }
 .big-cta .cta-pill-circle { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; position: absolute; left: 8px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 .big-cta .cta-pill-circle span { color: var(--ink); font-size: 1.25rem; line-height: 1; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -2886,4 +2889,52 @@ body.menu-open .site-shell .site-header.is-cream .menu-toggle {
   transform: scale(1.6) !important;
   transform-origin: left center !important;
   margin-right: 1.5rem !important;
+}
+/* Pricing & Contact Proposal integration */
+.pricing-error {
+  color: #ff4d4d; /* Use a bright red/pink for dark mode visibility */
+  font-size: 0.875rem;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.proposal-summary-block {
+  padding: 22px 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.proposal-summary-block:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+}
+.proposal-summary-content > strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: rgba(244,240,245,.5);
+  margin-bottom: 12px;
+}
+.proposal-summary-content p {
+  margin: 4px 0;
+  font-size: 1.1rem;
+  color: rgba(244,240,245,.9);
+}
+.proposal-summary-content p strong {
+  display: inline;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-right: 8px;
+}
+.edit-proposal-btn {
+  align-self: flex-start;
+  margin-top: 4px;
 }

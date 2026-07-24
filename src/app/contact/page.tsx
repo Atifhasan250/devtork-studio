@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import ContactForm from "@/components/ContactForm";
 import Accordion from "@/components/Accordion";
 import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter, FaCalendarDays } from "react-icons/fa6";
@@ -10,7 +11,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="page-hero page-hero-animated"><div className="container parallax-layer" data-parallax data-parallax-speed="0.035"><p className="eyebrow">Start a project</p><h1 className="page-title">Let’s begin with a clear conversation.</h1><p className="lead">A complete brief is not required. Share the goal, the problem, and what you know so far.</p></div></section>
-      <section className="section section-paper-2 contact-section-tight">
+      <section className="section section-paper-2 contact-section-tight" id="contact" style={{ scrollMarginTop: "calc(var(--header-h) + 20px)" }}>
         <div className="container">
           <h2 style={{ textAlign: 'center', fontSize: 'clamp(50px, 4vw, 40px)', fontWeight: 700, marginBottom: 'clamp(40px, 5vw, 70px)', marginTop: 0 }}>Contact Us</h2>
         </div>
@@ -59,7 +60,9 @@ export default function ContactPage() {
 
             </div>
           </aside>
-          <ContactForm />
+          <Suspense fallback={<div className="contact-form" style={{ minHeight: '600px', display: 'grid', placeItems: 'center' }}>Loading form...</div>}>
+            <ContactForm />
+          </Suspense>
         </div>
       </section>
       <section className="section" id="faq"><div className="container"><div className="split-heading"><div><p className="eyebrow">Common questions</p><h2>Before we start.</h2></div><Accordion /></div></div></section>
