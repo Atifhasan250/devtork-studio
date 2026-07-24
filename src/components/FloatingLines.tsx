@@ -73,7 +73,7 @@ export default function FloatingLines({
     // This is a decorative full-viewport shader; keeping it at 30fps leaves
     // enough GPU headroom for Lenis, layout, and input while preserving the
     // perceived motion of the lines.
-    const targetFps = 30;
+    const targetFps = isCompact ? 24 : 30;
     const frameInterval = 1000 / targetFps;
     const counts = Array.isArray(lineCount) ? lineCount : [lineCount, lineCount, lineCount];
     const distances = Array.isArray(lineDistance) ? lineDistance : [lineDistance, lineDistance, lineDistance];
@@ -155,6 +155,14 @@ export default function FloatingLines({
       lastTick = now;
       lastFrame = now - ((now - lastFrame) % frameInterval);
       elapsed += delta / 1000;
+      
+      // Prevent float precision jitter on mobile (mediump) after running for a long time
+      // The shader uses sin(time * 0.1) and sin(time * 0.2), so the period is 20 * PI
+      const period = (20 * Math.PI) / animationSpeed;
+      if (elapsed > period * 2) {
+        elapsed -= period;
+      }
+      
       uniforms.iTime.value = elapsed;
       if (uniforms.interactive.value) {
         currentMouse.lerp(targetMouse, mouseDamping);
