@@ -35,8 +35,9 @@ export default function PricingPage() {
           <div>
             <p className="eyebrow">Have an idea?</p>
             <h2>Let’s turn it into something people understand, trust, and remember.</h2>
-            <Link aria-label="Start a project" className="cta-circle" href="/contact">
-              <span>Start<br />project ↗&#xFE0E;</span>
+            <Link aria-label="Start a project" className="cta-pill" href="/contact">
+              <span className="cta-pill-circle"><span>→&#xFE0E;</span></span>
+              <span className="cta-pill-text">Start project</span>
             </Link>
           </div>
         </div>

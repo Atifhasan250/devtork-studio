@@ -389,23 +389,6 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   const headerOnDark = true;
 
-  useEffect(() => {
-    const links = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav > a");
-    let visibleIndex = 1;
-    links.forEach((link) => {
-      const href = new URL(link.href).pathname;
-      const isHome = href === "/";
-      const isCurrent = isHome ? pathname === "/" : pathname.startsWith(href);
-      link.hidden = isCurrent;
-      link.style.setProperty("display", isCurrent ? "none" : "", "important");
-      if (!isCurrent) {
-        const number = link.querySelector("small");
-        if (number) number.textContent = String(visibleIndex).padStart(2, "0");
-        visibleIndex += 1;
-      }
-    });
-  }, [pathname, menuOpen]);
-
   return (
     <div className={`site-shell ${pathname === "/" ? "is-home" : ""}`} onClickCapture={navigate}>
       <a className="skip-link" href="#main">Skip to content</a>
@@ -425,15 +408,23 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         <div className={`site-loader ${loading ? "" : "is-done"}`} aria-hidden="true">
           <div className="loader-grid" />
           <div className="loader-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
-            <div className="dynamic-spinner" style={{
-              width: '80px',
-              height: '80px',
-              border: '4px solid rgba(255, 255, 255, 0.1)',
-              borderTopColor: '#ffffff',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }}></div>
+            <div className="dynamic-spinner"></div>
             <style>{`
+              .dynamic-spinner {
+                width: 80px;
+                height: 80px;
+                border: 4px solid rgba(255, 255, 255, 0.1);
+                border-top-color: #ffffff;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+              }
+              @media (max-width: 768px) {
+                .dynamic-spinner {
+                  width: 50px;
+                  height: 50px;
+                  border-width: 3px;
+                }
+              }
               @keyframes spin {
                 to { transform: rotate(360deg); }
               }
