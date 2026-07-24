@@ -42,7 +42,7 @@ export default function HomePage() {
 
       <section className="section section-dark motion-surface"><div className="container"><div className="section-head section-head-services"><div><p className="eyebrow" data-reveal>What we do</p><h2 data-reveal>One studio.<br />From idea to growth.</h2></div><div className="service-intro"><p className="lead muted" data-reveal>You do not need six different teams. We connect strategy, design, technology, and marketing around one clear goal.</p><Link className="btn btn-outline service-all-link" href="/services">All services <span className="btn-icon">↗&#xFE0E;</span></Link></div></div><ServiceList rows={serviceRows} /></div></section>
       
-      <section className="section">
+      <section className="section pb-0-desktop">
         <div className="container">
           <div className="section-head">
             <h2 data-reveal>Our achievements</h2>

@@ -582,6 +582,13 @@ body.cursor-hidden .cursor-dot { opacity: 0 !important; }
 .big-cta { overflow: hidden; }
 .big-cta-inner { min-height: 72vh; display: grid; align-items: center; text-align: center; }
 .big-cta h2 { max-width: 1180px; margin-inline: auto; }
+.text-center { text-align: center; }
+.mb-2 { margin-bottom: 16px; }
+
+@media (min-width: 900px) {
+  .pb-0-desktop { padding-bottom: 0 !important; }
+}
+
 @media (min-width: 769px) {
   .big-cta h2 { font-size: clamp(40px, 5vw, 74px); }
 }
