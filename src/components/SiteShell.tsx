@@ -7,16 +7,14 @@ import { type MouseEvent as ReactMouseEvent, type ReactNode, useEffect, useRef, 
 import FloatingLines from "@/components/FloatingLines";
 
 const navItems = [
+  { href: "/", label: "Home", index: "00" },
   { href: "/work", label: "Work", index: "01" },
   { href: "/services", label: "Services", index: "02" },
-  { href: "/studio", label: "Studio", index: "03" },
-  { href: "/insights", label: "Insights", index: "04" }
+  { href: "/about", label: "About", index: "03" },
+  { href: "/pricing", label: "Pricing", index: "04" }
 ];
 
-const mobileNavItems = [
-  { href: "/", label: "Home", index: "01" },
-  ...navItems.map((item, index) => ({ ...item, index: String(index + 2).padStart(2, "0") }))
-];
+const mobileNavItems = navItems.map((item, index) => ({ ...item, index: String(index + 1).padStart(2, "0") }));
 
 const homeLineGradient = ["#ac7cbb", "#a96cbb", "#8d159f", "#c28fca"];
 const homeLineCount = [5, 9, 13];
@@ -89,7 +87,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [creamNav, setCreamNav] = useState(pathname === "/studio");
+  const [creamNav, setCreamNav] = useState(pathname === "/about");
   const [loading, setLoading] = useState(true);
   const [loaderMounted, setLoaderMounted] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -196,7 +194,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     setMenuOpen(false);
     document.body.classList.remove("menu-open");
     setScrolled(false);
-    setCreamNav(pathname === "/studio");
+    setCreamNav(pathname === "/about");
     if (!window.location.hash) window.scrollTo(0, 0);
 
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal], [data-stagger]"));
@@ -238,13 +236,12 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     const update = () => {
       const header = document.querySelector<HTMLElement>(".site-header");
       const probeY = (header?.getBoundingClientRect().bottom ?? 84) - 14;
-      const darkSectionUnderHeader = Array.from(document.querySelectorAll<HTMLElement>("#main .section-dark"))
+      const darkSectionUnderHeader = Array.from(document.querySelectorAll<HTMLElement>("#main .section-dark:not(.no-cream-nav)"))
         .some((section) => {
           const rect = section.getBoundingClientRect();
           return rect.top <= probeY && rect.bottom >= probeY;
         });
-      const darkSection = (pathname === "/studio" && window.scrollY < 40) || darkSectionUnderHeader;
-      setCreamNav((current) => current === darkSection ? current : darkSection);
+      setCreamNav((current) => current === darkSectionUnderHeader ? current : darkSectionUnderHeader);
     };
     const onScroll = () => {
       setScrolled(window.scrollY > 18);
@@ -495,15 +492,18 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         <div className="header-inner">
           <Brand />
           <nav className="nav" aria-label="Primary navigation">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} aria-current={pathname.startsWith(item.href) ? "page" : undefined}>
-                <span className="nav-index" aria-hidden="true">{item.index}</span>
-                <span className="nav-label" data-label={item.label}><span>{item.label}</span></span>
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isCurrent = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              return (
+                <Link key={item.href} href={item.href} aria-current={isCurrent ? "page" : undefined}>
+                  <span className="nav-index" aria-hidden="true">{item.index}</span>
+                  <span className="nav-label" data-label={item.label}><span>{item.label}</span></span>
+                </Link>
+              );
+            })}
           </nav>
           <div className="header-actions">
-            <Link className="header-cta" data-magnetic href="/contact"><span>Let&apos;s talk</span><b aria-hidden="true">↗</b></Link>
+            <Link className="header-cta" data-magnetic href="/contact"><span>Contact</span><b aria-hidden="true">↗</b></Link>
             <button className="menu-toggle" type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={toggleMenu}><span /><span /></button>
           </div>
         </div>
