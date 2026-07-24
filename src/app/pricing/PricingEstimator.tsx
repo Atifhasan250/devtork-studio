@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle2, Check, ArrowRight } from "lucide-react";
 import styles from "./pricing.module.css";
 
@@ -17,15 +17,42 @@ const services = [
 const budgetRanges = ["Under $500", "$500-1000", "$1000-2000", "$10k+"];
 
 export default function PricingEstimator() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [chosen, setChosen] = useState<string[]>([]);
   const [budget, setBudget] = useState<string>("Under $500");
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const servicesParam = searchParams.get("services");
+    if (servicesParam) {
+      const parsedServices = servicesParam.split(",").map(s => s.trim());
+      setChosen(parsedServices.filter(s => services.some(srv => srv.title === s)));
+    }
+    const budgetParam = searchParams.get("budget");
+    if (budgetParam) {
+      setBudget(budgetParam);
+    }
+  }, [searchParams]);
 
   const toggle = (title: string) => {
+    setError("");
     if (chosen.includes(title)) {
       setChosen(chosen.filter((s) => s !== title));
     } else {
       setChosen([...chosen, title]);
     }
+  };
+
+  const handleRequest = () => {
+    if (chosen.length === 0) {
+      setError("At least 1 option must be selected.");
+      return;
+    }
+    const servicesParam = encodeURIComponent(chosen.join(", "));
+    const budgetParam = encodeURIComponent(budget);
+    router.push(`/contact?services=${servicesParam}&budget=${budgetParam}#contact`);
   };
 
   const summaryCard = (
@@ -35,9 +62,10 @@ export default function PricingEstimator() {
         {chosen.length ? chosen.join(" + ") : "Choose one or more services"}
       </p>
       <p className={styles.summaryBudget}>Budget range: {budget}</p>
-      <Link href="/contact" className={styles.requestBtn}>
+      {error && <div className="pricing-error">{error}</div>}
+      <button onClick={handleRequest} className={styles.requestBtn}>
         Request a Proposal <ArrowRight size={16} />
-      </Link>
+      </button>
     </div>
   );
 

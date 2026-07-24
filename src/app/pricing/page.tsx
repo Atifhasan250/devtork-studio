@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import PricingEstimator from "./PricingEstimator";
 import Link from "next/link";
 import Accordion from "@/components/Accordion";
@@ -13,7 +14,9 @@ export default function PricingPage() {
     <main className="home-experience">
       {/* Interactive Estimator Section */}
       <section className="section section-dark no-cream-nav" style={{ paddingTop: "calc(var(--header-h) + 10px)" }}>
-        <PricingEstimator />
+        <Suspense fallback={<div style={{ minHeight: '80vh', display: 'grid', placeItems: 'center', color: '#fff' }}>Loading...</div>}>
+          <PricingEstimator />
+        </Suspense>
       </section>
 
       {/* FAQ Section (reused from home page) */}
